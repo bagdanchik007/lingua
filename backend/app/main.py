@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
+from app.api.v1 import auth, languages, grammar, vocabulary, progress, ai
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -10,7 +11,6 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# CORS – später anpassen
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -19,13 +19,29 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Alle Router einbinden
+app.include_router(auth.router, prefix=settings.API_V1_STR)
+app.include_router(languages.router, prefix=settings.API_V1_STR)
+app.include_router(grammar.router, prefix=settings.API_V1_STR)
+app.include_router(vocabulary.router, prefix=settings.API_V1_STR)
+app.include_router(progress.router, prefix=settings.API_V1_STR)
+app.include_router(ai.router, prefix=settings.API_V1_STR)
+
 
 @app.get("/")
 def root():
     return {
         "message": "Willkommen bei LinguaStruct API",
         "docs": "/docs",
-        "version": "0.1.0",
+        "version": "0.3.0",
+        "features": [
+            "Auth (Register/Login/JWT)",
+            "Languages & Levels",
+            "Grammar Topics",
+            "Vocabulary + Spaced Repetition",
+            "Progress & Stats",
+            "AI Chat + Speaking (Foundation)",
+        ],
     }
 
 
