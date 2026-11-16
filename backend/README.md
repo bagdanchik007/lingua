@@ -1,6 +1,15 @@
 # LinguaStruct
 
-Strukturierte Sprachlern-Plattform mit starkem Fokus auf Grammatik, klaren Niveaus und intelligentem Wortschatz-Training.
+Strukturierte Sprachlern-Plattform mit starkem Fokus auf Grammatik, klaren CEFR-Niveaus und intelligentem Wortschatz-Training.
+
+## Features (aktueller Stand)
+
+- JWT Auth (Register / Login / Me)
+- Sprachen & Levels (CEFR + Unterstufen)
+- Grammatik-Themen mit Erklärungen
+- Wortschatz + Spaced Repetition (SM-2 ähnlich)
+- Übungs-Ergebnisse & User-Statistiken
+- KI-Chat + SprechenOrt (Grundgerüst / Platzhalter)
 
 ## Tech Stack
 
@@ -8,30 +17,43 @@ Strukturierte Sprachlern-Plattform mit starkem Fokus auf Grammatik, klaren Nivea
 - FastAPI
 - SQLAlchemy 2.0
 - PostgreSQL
-- Pydantic Settings
-- Alembic (Migrationen)
+- Pydantic v2
+- python-jose + passlib (JWT + bcrypt)
 
-## Projekt starten
+## Setup
 
 ```bash
-# Virtuelle Umgebung erstellen
 python -m venv venv
 
-# Aktivieren
-# Windows:
+# Windows
 venv\Scripts\activate
-# macOS/Linux:
+# macOS/Linux
 source venv/bin/activate
 
-# Abhängigkeiten installieren
 pip install -r requirements.txt
 
-# .env Datei erstellen
 cp .env.example .env
-# Dann DATABASE_URL und SECRET_KEY anpassen
+# SECRET_KEY und DATABASE_URL anpassen
 
-# Server starten
 uvicorn app.main:app --reload
 ```
 
-API Dokumentation: http://127.0.0.1:8000/docs
+API Docs: http://127.0.0.1:8000/docs
+
+## Wichtige Endpunkte
+
+| Methode | Endpunkt | Beschreibung |
+|---------|----------|--------------|
+| POST | /api/v1/auth/register | Registrierung |
+| POST | /api/v1/auth/login | Login (Token) |
+| GET | /api/v1/auth/me | Aktueller User |
+| GET | /api/v1/languages/ | Sprachen |
+| GET | /api/v1/languages/{id}/levels | Levels einer Sprache |
+| GET | /api/v1/grammar/ | Grammatik-Themen |
+| GET | /api/v1/vocabulary/ | Vokabeln |
+| GET | /api/v1/vocabulary/due | Fällige Karten (SRS) |
+| POST | /api/v1/vocabulary/review | Karte bewerten |
+| POST | /api/v1/progress/exercise | Übungsergebnis speichern |
+| GET | /api/v1/progress/stats | User-Statistiken |
+| POST | /api/v1/ai/chat | KI-Chat |
+| POST | /api/v1/ai/speaking | SprechenOrt |
