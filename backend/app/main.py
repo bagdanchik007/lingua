@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import settings
-from app.api.v1 import auth, languages, grammar, vocabulary, progress, ai
+from app.api.v1 import auth, languages, grammar, vocabulary, progress, ai, admin, learning
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
@@ -26,6 +26,8 @@ app.include_router(grammar.router, prefix=settings.API_V1_STR)
 app.include_router(vocabulary.router, prefix=settings.API_V1_STR)
 app.include_router(progress.router, prefix=settings.API_V1_STR)
 app.include_router(ai.router, prefix=settings.API_V1_STR)
+app.include_router(admin.router, prefix=settings.API_V1_STR)
+app.include_router(learning.router, prefix=settings.API_V1_STR)
 
 
 @app.get("/")
@@ -33,18 +35,21 @@ def root():
     return {
         "message": "Willkommen bei LinguaStruct API",
         "docs": "/docs",
-        "version": "0.3.0",
+        "version": "0.4.0",
         "features": [
             "Auth (Register/Login/JWT)",
-            "Languages & Levels",
-            "Grammar Topics",
+            "Languages & Levels (CEFR)",
+            "Grammar Topics mit echten Erklärungen",
             "Vocabulary + Spaced Repetition",
-            "Progress & Stats",
-            "AI Chat + Speaking (Foundation)",
+            "Progress, Stats & Streaks",
+            "Weakness Detection & Learning Path",
+            "AI Chat (free/guided/roleplay/correction)",
+            "SprechenOrt Foundation",
+            "Seed Data für Sprachen & Grammatik",
         ],
     }
 
 
 @app.get("/health")
 def health_check():
-    return {"status": "ok"}
+    return {"status": "ok", "version": "0.4.0"}
