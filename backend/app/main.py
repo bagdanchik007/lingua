@@ -9,6 +9,7 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
     docs_url="/docs",
     redoc_url="/redoc",
+    version="0.5.0",
 )
 
 app.add_middleware(
@@ -19,7 +20,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Alle Router einbinden
 app.include_router(auth.router, prefix=settings.API_V1_STR)
 app.include_router(languages.router, prefix=settings.API_V1_STR)
 app.include_router(grammar.router, prefix=settings.API_V1_STR)
@@ -35,21 +35,27 @@ def root():
     return {
         "message": "Willkommen bei LinguaStruct API",
         "docs": "/docs",
-        "version": "0.4.0",
+        "version": "0.5.0",
         "features": [
             "Auth (Register/Login/JWT)",
             "Languages & Levels (CEFR)",
-            "Grammar Topics mit echten Erklärungen",
-            "Vocabulary + Spaced Repetition",
+            "Grammar Topics + Search",
+            "Vocabulary + Spaced Repetition + Review History",
+            "Pagination & Filtering",
             "Progress, Stats & Streaks",
             "Weakness Detection & Learning Path",
-            "AI Chat (free/guided/roleplay/correction)",
-            "SprechenOrt Foundation",
-            "Seed Data für Sprachen & Grammatik",
+            "AI Chat (free/guided/roleplay/correction) + Rate Limit",
+            "SprechenOrt Foundation + Rate Limit",
+            "Seed Data",
         ],
     }
 
 
 @app.get("/health")
 def health_check():
-    return {"status": "ok", "version": "0.4.0"}
+    return {"status": "ok", "version": "0.5.0"}
+
+
+@app.get("/ready")
+def readiness_check():
+    return {"status": "ready"}
