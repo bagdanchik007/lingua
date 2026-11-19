@@ -3,6 +3,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 from app.core.database import get_db
+from app.core.config import settings
 from app.schemas.user import UserCreate, UserRead, Token
 from app.services.auth_service import create_user, authenticate_user, create_token_for_user
 from app.api.deps import get_current_user
@@ -32,7 +33,11 @@ def login(
             headers={"WWW-Authenticate": "Bearer"},
         )
     access_token = create_token_for_user(user)
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+        "expires_in": settings.ACCESS_TOKEN_EXPIRE_MINUTES * 60,
+    }
 
 
 @router.get("/me", response_model=UserRead)
