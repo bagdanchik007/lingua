@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
 
@@ -54,6 +54,14 @@ def search_grammar(
     if language_id:
         query = query.filter(GrammarTopic.language_id == language_id)
     return query.order_by(GrammarTopic.order).limit(limit).all()
+
+
+@router.get("/by-slug/{slug}", response_model=GrammarTopicRead)
+def get_grammar_by_slug(slug: str, db: Session = Depends(get_db)):
+    topic = db.query(GrammarTopic).filter(GrammarTopic.slug == slug, GrammarTopic.is_active == True).first()
+    if not topic:
+        raise NotFoundError("Grammar topic not found")
+    return topic
 
 
 @router.get("/{topic_id}", response_model=GrammarTopicRead)
