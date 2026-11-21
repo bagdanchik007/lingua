@@ -157,3 +157,47 @@ def seed_grammar_topics(db: Session) -> int:
 
     db.commit()
     return created
+
+
+def seed_sample_exercises(db: Session) -> int:
+    """Legt Beispiel-Übungen an, falls Grammatik-Themen existieren."""
+    from app.models.exercise import Exercise
+    from app.models.grammar import GrammarTopic
+
+    topic = db.query(GrammarTopic).filter(GrammarTopic.slug == "artikel-nominativ").first()
+    if not topic:
+        return 0
+    existing = db.query(Exercise).filter(Exercise.grammar_topic_id == topic.id).count()
+    if existing > 0:
+        return 0
+
+    samples = [
+        {
+            "exercise_type": "multiple_choice",
+            "prompt": "Welcher Artikel passt? ___ Mann liest.",
+            "correct_answer": "Der",
+            "alternatives": {"options": ["Der", "Die", "Das", "Den"]},
+            "explanation": "Mann ist maskulin → bestimmter Artikel im Nominativ: der.",
+            "difficulty": 1,
+        },
+        {
+            "exercise_type": "fill_blank",
+            "prompt": "___ Frau spricht Deutsch. (bestimmt, Nominativ)",
+            "correct_answer": "Die",
+            "alternatives": None,
+            "explanation": "Frau ist feminin → die.",
+            "difficulty": 1,
+        },
+    ]
+    created = 0
+    for s in samples:
+        ex = Exercise(
+            language_id=topic.language_id,
+            level_id=topic.level_id,
+            grammar_topic_id=topic.id,
+            **s,
+        )
+        db.add(ex)
+        created += 1
+    db.commit()
+    return created
