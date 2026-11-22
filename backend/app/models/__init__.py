@@ -7,6 +7,8 @@ from app.models.progress import UserProgress, ExerciseResult
 from app.models.review import ReviewHistory, UserStreak
 from app.models.exercise import Exercise
 from app.models.activity import DailyActivity
+from app.models.achievement import Achievement, UserAchievement
+from app.models.notification import Notification
 
 __all__ = [
     "User",
@@ -21,4 +23,7 @@ __all__ = [
     "UserStreak",
     "Exercise",
     "DailyActivity",
+    "Achievement",
+    "UserAchievement",
+    "Notification",
 ]
