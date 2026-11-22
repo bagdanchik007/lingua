@@ -4,9 +4,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.core.logging import setup_logging
 from app.middleware.request_id import RequestIdMiddleware
+from app.middleware.security_headers import SecurityHeadersMiddleware
 from app.api.v1 import (
     auth, users, languages, grammar, vocabulary,
     progress, ai, admin, learning, exercises, dashboard,
+    achievements, notifications, leaderboard, search, feedback,
 )
 
 setup_logging()
@@ -16,9 +18,10 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
     docs_url="/docs",
     redoc_url="/redoc",
-    version="0.7.0",
+    version="0.8.0",
 )
 
+app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(RequestIdMiddleware)
 app.add_middleware(
     CORSMiddleware,
@@ -29,9 +32,22 @@ app.add_middleware(
 )
 
 for router in (
-    auth.router, users.router, languages.router, grammar.router,
-    vocabulary.router, progress.router, ai.router, admin.router,
-    learning.router, exercises.router, dashboard.router,
+    auth.router,
+    users.router,
+    languages.router,
+    grammar.router,
+    vocabulary.router,
+    progress.router,
+    ai.router,
+    admin.router,
+    learning.router,
+    exercises.router,
+    dashboard.router,
+    achievements.router,
+    notifications.router,
+    leaderboard.router,
+    search.router,
+    feedback.router,
 ):
     app.include_router(router, prefix=settings.API_V1_STR)
 
@@ -41,16 +57,21 @@ def root():
     return {
         "message": "Willkommen bei LinguaStruct API",
         "docs": "/docs",
-        "version": "0.7.0",
+        "version": "0.8.0",
         "environment": settings.ENVIRONMENT,
     }
 
 
 @app.get("/health")
 def health_check():
-    return {"status": "ok", "version": "0.7.0"}
+    return {"status": "ok", "version": "0.8.0"}
 
 
 @app.get("/ready")
 def readiness_check():
     return {"status": "ready"}
+
+
+@app.get("/version")
+def version_info():
+    return {"version": "0.8.0", "project": settings.PROJECT_NAME}
