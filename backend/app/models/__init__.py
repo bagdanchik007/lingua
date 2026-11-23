@@ -9,6 +9,9 @@ from app.models.exercise import Exercise
 from app.models.activity import DailyActivity
 from app.models.achievement import Achievement, UserAchievement
 from app.models.notification import Notification
+from app.models.session import StudySession
+from app.models.favorite import FavoriteVocabulary
+from app.models.report import ContentReport
 
 __all__ = [
     "User",
@@ -26,4 +29,7 @@ __all__ = [
     "Achievement",
     "UserAchievement",
     "Notification",
+    "StudySession",
+    "FavoriteVocabulary",
+    "ContentReport",
 ]
