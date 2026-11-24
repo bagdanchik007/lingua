@@ -1,21 +1,16 @@
 # Changelog
 
+## 1.0.0
+- LLM Provider Abstraction (Mock + Factory)
+- Persistent Conversations + Chat Messages
+- Adaptive Learning Recommendations
+- Lessons + User Lesson Progress
+- Social Practice Partner Matching (Foundation)
+- Optional Redis Cache Adapter
+- GitHub Actions CI
+
 ## 0.9.0
-- Study Sessions (start/end/active)
-- Favorite Vocabulary
-- Content Reports (User + Admin resolve)
-- Feature Flags foundation
-- API response helpers
-- LICENSE (MIT), EditorConfig
-- OpenAPI contact & license metadata
+- Study Sessions, Favorites, Content Reports
 
 ## 0.8.0
-- Achievements, Notifications, Leaderboard
-- Global Search, Feedback
-- Security Headers, Cache, Validators
-
-## 0.7.0
-- Exercises + Dashboard + Daily Activity
-
-## 0.6.0
-- User Profile, Docker, Request ID
+- Achievements, Notifications, Leaderboard, Search
