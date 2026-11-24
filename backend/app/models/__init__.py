@@ -12,24 +12,16 @@ from app.models.notification import Notification
 from app.models.session import StudySession
 from app.models.favorite import FavoriteVocabulary
 from app.models.report import ContentReport
+from app.models.conversation import Conversation, ChatMessage
+from app.models.lesson import Lesson, UserLessonProgress
+from app.models.social import PracticePartnerRequest
 
 __all__ = [
-    "User",
-    "Language",
-    "Level",
-    "GrammarTopic",
-    "Vocabulary",
-    "UserVocabulary",
-    "UserProgress",
-    "ExerciseResult",
-    "ReviewHistory",
-    "UserStreak",
-    "Exercise",
-    "DailyActivity",
-    "Achievement",
-    "UserAchievement",
-    "Notification",
-    "StudySession",
-    "FavoriteVocabulary",
-    "ContentReport",
+    "User", "Language", "Level", "GrammarTopic",
+    "Vocabulary", "UserVocabulary", "UserProgress", "ExerciseResult",
+    "ReviewHistory", "UserStreak", "Exercise", "DailyActivity",
+    "Achievement", "UserAchievement", "Notification",
+    "StudySession", "FavoriteVocabulary", "ContentReport",
+    "Conversation", "ChatMessage", "Lesson", "UserLessonProgress",
+    "PracticePartnerRequest",
 ]
