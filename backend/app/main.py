@@ -10,6 +10,7 @@ from app.api.v1 import (
     progress, ai, admin, learning, exercises, dashboard,
     achievements, notifications, leaderboard, search, feedback,
     sessions, favorites, reports,
+    conversations, lessons, social, adaptive,
 )
 
 setup_logging()
@@ -19,7 +20,7 @@ app = FastAPI(
     openapi_url=f"{settings.API_V1_STR}/openapi.json",
     docs_url="/docs",
     redoc_url="/redoc",
-    version="0.9.0",
+    version="1.0.0",
     contact={"name": "LinguaStruct", "email": "dev@linguastruct.local"},
     license_info={"name": "MIT"},
 )
@@ -35,25 +36,13 @@ app.add_middleware(
 )
 
 for router in (
-    auth.router,
-    users.router,
-    languages.router,
-    grammar.router,
-    vocabulary.router,
-    progress.router,
-    ai.router,
-    admin.router,
-    learning.router,
-    exercises.router,
-    dashboard.router,
-    achievements.router,
-    notifications.router,
-    leaderboard.router,
-    search.router,
-    feedback.router,
-    sessions.router,
-    favorites.router,
-    reports.router,
+    auth.router, users.router, languages.router, grammar.router,
+    vocabulary.router, progress.router, ai.router, admin.router,
+    learning.router, exercises.router, dashboard.router,
+    achievements.router, notifications.router, leaderboard.router,
+    search.router, feedback.router, sessions.router, favorites.router,
+    reports.router, conversations.router, lessons.router,
+    social.router, adaptive.router,
 ):
     app.include_router(router, prefix=settings.API_V1_STR)
 
@@ -63,14 +52,14 @@ def root():
     return {
         "message": "Willkommen bei LinguaStruct API",
         "docs": "/docs",
-        "version": "0.9.0",
+        "version": "1.0.0",
         "environment": settings.ENVIRONMENT,
     }
 
 
 @app.get("/health")
 def health_check():
-    return {"status": "ok", "version": "0.9.0"}
+    return {"status": "ok", "version": "1.0.0"}
 
 
 @app.get("/ready")
@@ -80,4 +69,4 @@ def readiness_check():
 
 @app.get("/version")
 def version_info():
-    return {"version": "0.9.0", "project": settings.PROJECT_NAME}
+    return {"version": "1.0.0", "project": settings.PROJECT_NAME}
