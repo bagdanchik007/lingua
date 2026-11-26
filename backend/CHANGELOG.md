@@ -1,16 +1,21 @@
 # Changelog
 
+## 1.1.0
+- OpenAI LLM Provider (optional)
+- Speaking attempts + evaluation API
+- User data export (GDPR-style)
+- Vocabulary content import
+- Audit log foundation
+- Email + background task stubs
+- Platform metrics (admin)
+- Health checks for DB/Redis
+- Timing middleware
+- English basics seed
+- Alembic placeholder revision
+- Extra unit tests
+
 ## 1.0.0
-- LLM Provider Abstraction (Mock + Factory)
-- Persistent Conversations + Chat Messages
-- Adaptive Learning Recommendations
-- Lessons + User Lesson Progress
-- Social Practice Partner Matching (Foundation)
-- Optional Redis Cache Adapter
-- GitHub Actions CI
+- Conversations, Adaptive, Lessons, Social, CI
 
 ## 0.9.0
-- Study Sessions, Favorites, Content Reports
-
-## 0.8.0
-- Achievements, Notifications, Leaderboard, Search
+- Sessions, Favorites, Reports
