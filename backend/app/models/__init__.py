@@ -15,6 +15,8 @@ from app.models.report import ContentReport
 from app.models.conversation import Conversation, ChatMessage
 from app.models.lesson import Lesson, UserLessonProgress
 from app.models.social import PracticePartnerRequest
+from app.models.audit import AuditLog
+from app.models.audio import SpeakingAttempt
 
 __all__ = [
     "User", "Language", "Level", "GrammarTopic",
@@ -23,5 +25,5 @@ __all__ = [
     "Achievement", "UserAchievement", "Notification",
     "StudySession", "FavoriteVocabulary", "ContentReport",
     "Conversation", "ChatMessage", "Lesson", "UserLessonProgress",
-    "PracticePartnerRequest",
+    "PracticePartnerRequest", "AuditLog", "SpeakingAttempt",
 ]
