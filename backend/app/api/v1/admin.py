@@ -6,6 +6,7 @@ from app.api.deps import get_current_user
 from app.models.user import User
 from app.services.seed_service import seed_languages_and_levels, seed_grammar_topics
 from app.services.achievement_service import ensure_default_achievements
+from app.services.seed_en import seed_english_basics
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -15,13 +16,13 @@ def run_seed(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    """Seed-Daten für Sprachen, Levels, Grammatik und Achievements."""
     if not current_user.is_active:
         raise HTTPException(status_code=403, detail="Not allowed")
 
     lang_result = seed_languages_and_levels(db)
     grammar_count = seed_grammar_topics(db)
     achievements_created = ensure_default_achievements(db)
+    en = seed_english_basics(db)
 
     sample_exercises = 0
     try:
@@ -37,4 +38,6 @@ def run_seed(
         "grammar_topics_created": grammar_count,
         "achievements_created": achievements_created,
         "sample_exercises_created": sample_exercises,
+        "english_vocabulary": en.get("vocabulary", 0),
+        "english_grammar": en.get("grammar", 0),
     }
